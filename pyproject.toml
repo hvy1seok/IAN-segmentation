@@ -47,6 +47,9 @@ priority = "primary"
 # url = "https://download.pytorch.org/whl/cu117"
 # priority = "explicit"
 
+[tool.poetry.scripts]
+my-project = "ian-segmentation.train:run"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

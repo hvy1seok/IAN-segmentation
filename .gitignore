@@ -1,4 +1,6 @@
 __pycache__
+.vscode
+
 wandb/
 dataset_for_public/
 results/

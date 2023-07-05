@@ -305,7 +305,8 @@ class Generation(Experiment):
             dataset = Maxillo(
                     self.config.data_loader.dataset,
                     'splits.json',
-                    splits=['train','val','test'],
+                    # splits=['train','val','test'],
+                    splits='synthetic',  # issue 8: https://github.com/AImageLab-zip/alveolar_canal/issues/8
                     transform=self.config.data_loader.preprocessing,
                     dist_map=['sparse', 'dense']
             )
