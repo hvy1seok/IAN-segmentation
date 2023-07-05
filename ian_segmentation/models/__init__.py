@@ -11,7 +11,11 @@ class ModelFactory(nn.Module):
         self.emb_shape = emb_shape
 
     def get(self):
-        if self.model_name == 'DeepLabV3':
+        if self.model_name == 'PosPadUNet3D':
+            from .PosPadUNet3D import PosPadUNet3D
+            assert self.emb_shape is not None
+            return PosPadUNet3D(self.num_classes, self.emb_shape, self.in_ch)
+        elif self.model_name == 'DeepLabV3':
             from .deeplabv33d import DeepLabV3_3D
             return DeepLabV3_3D(self.num_classes, self.emb_shape, self.in_ch, 'resnet18_os8')
         else:

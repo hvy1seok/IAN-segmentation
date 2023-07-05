@@ -1,17 +1,17 @@
-title: DeepLab3D
+title: canal_generator_train
 project_dir: '../../alveolar_canal/results'
 seed: 42
 
 experiment:
-  name: Segmentation
+  name: Generation
 
 data_loader:
   dataset: ../../alveolar_canal/dataset_for_public
-  training_set: generated
+  training_set: null
   preprocessing: configs/preprocessing.yaml
   augmentations: configs/augmentations.yaml
   background_suppression: 0
-  batch_size: 42
+  batch_size: 2
   labels:
     BACKGROUND: 0
     INSIDE: 1
@@ -30,7 +30,7 @@ data_loader:
   volumes_min: 0
 
 model:
-  name: DeepLabV3
+  name: PosPadUNet3D
 
 loss:
   name: Jaccard
@@ -43,10 +43,10 @@ optimizer:
   name: SGD
 
 trainer:
-  reload: False # True
+  reload: False
   checkpoint: ''
   do_train: True
   do_test: False
   do_inference: False
   epochs: 200
-  name: DeepLabv3
+  name: jang220531
