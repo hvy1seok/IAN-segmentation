@@ -422,8 +422,8 @@ if __name__ == "__main__":
 
     # start wandb
     wandb.init(
-        project="alveolar_canal",
-        entity="summerlee",
+        project="alveolar_canal_lee",
+        entity="ian-segmentation",
         config=unmunchify(config)
     )
 
