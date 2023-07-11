@@ -4,3 +4,4 @@ __pycache__
 wandb/
 dataset_for_public/
 results/
+weights/

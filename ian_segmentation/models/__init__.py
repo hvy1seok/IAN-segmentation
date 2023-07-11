@@ -18,5 +18,8 @@ class ModelFactory(nn.Module):
         elif self.model_name == 'DeepLabV3':
             from .deeplabv33d import DeepLabV3_3D
             return DeepLabV3_3D(self.num_classes, self.emb_shape, self.in_ch, 'resnet18_os8')
+        elif self.model_name == 'SwinUNETR':
+            from .SwinUNETR import SwinUNETR
+            return SwinUNETR(self.num_classes, self.emb_shape, self.in_ch)
         else:
             raise ValueError(f'Model {self.model_name} not found')
