@@ -1,5 +1,6 @@
 import sys
 import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'  # for multi-gpu
 import argparse
 import logging
 import logging.config
@@ -350,7 +351,6 @@ class Generation(Experiment):
                 logging.info(f'patient {subject.patient} completed, {file_path}.')
 
 
-
 class Segmentation(Experiment):
     def __init__(self, config, debug=False):
         self.debug = debug
@@ -416,6 +416,9 @@ if __name__ == "__main__":
         os.environ['WANDB_DISABLED'] = 'true'
 
     # start wandb
+    with open('wandb_key.txt', 'r') as f:
+        api_key = f.read()
+    wandb.login(key=api_key)
     wandb.init(
         project="alveolar_canal_lee",
         entity="ian-segmentation",
