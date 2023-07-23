@@ -19,7 +19,7 @@ from ian_segmentation.transforms.augmentations import AugFactory
 from ian_segmentation.utils import setup
 
 
-def visualize_data(patient: int = 98, save_dir: os.PathLike = 'examples', splits: str = 'val') -> None:
+def visualize_data(save_dir: os.PathLike, patient: int = 98, splits: str = 'val') -> None:
     colormaps = ['Greys', 'Greens', 'Oranges']
 
     input_path = os.path.join(save_dir, splits, 'input', f'P{patient}.npy')
