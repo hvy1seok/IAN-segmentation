@@ -1,6 +1,6 @@
 from statistics import mean
 import torch
-from skimage import metrics
+# from skimage import metrics
 
 
 class Eval:
