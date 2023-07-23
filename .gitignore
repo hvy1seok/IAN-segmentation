@@ -1,7 +1,19 @@
 __pycache__
 .vscode
+.pytest_cache
+.venv
+.ipynb_checkpoints
 
 wandb/
 dataset_for_public/
 results/
 weights/
+
+examples/val/input/**
+!examples/val/input/P98.npy
+examples/val/gt/**
+!examples/val/gt/P98.npy
+examples/val/output/**
+!examples/val/output/P98.npy
+
+*.png

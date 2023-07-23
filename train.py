@@ -25,6 +25,7 @@ from ian_segmentation.schedulers import SchedulerFactory
 from ian_segmentation.losses import LossFactory
 from eval import Eval as Evaluator
 from ian_segmentation.datasets.maxillo import Maxillo
+from ian_segmentation.utils import setup
 from torch.utils.data import DataLoader
 
 
@@ -384,12 +385,6 @@ def timehash():
     h = h.hexdigest(5) # output len: 2*5=10
     return h.upper()
 
-def setup(seed):
-    torch.manual_seed(seed)
-    np.random.seed(seed)
-    random.seed(seed)
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cudnn.deterministic = True
 
 if __name__ == "__main__":
 
