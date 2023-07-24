@@ -1,6 +1,14 @@
 __pycache__
 .vscode
+.pytest_cache
+.venv
+.ipynb_checkpoints
 
 wandb/
 dataset_for_public/
 results/
+weights/
+examples/
+
+*.png
+wandb_key.txt

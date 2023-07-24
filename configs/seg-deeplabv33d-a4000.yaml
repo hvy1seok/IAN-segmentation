@@ -1,5 +1,5 @@
 title: DeepLab3D
-project_dir: '../../alveolar_canal/results'
+project_dir: 'results'
 seed: 42
 
 experiment:
@@ -11,7 +11,7 @@ data_loader:
   preprocessing: configs/preprocessing.yaml
   augmentations: configs/augmentations.yaml
   background_suppression: 0
-  batch_size: 42
+  batch_size: 54
   labels:
     BACKGROUND: 0
     INSIDE: 1
@@ -40,7 +40,7 @@ lr_scheduler:
 
 optimizer:
   learning_rate: 0.1
-  name: SGD
+  name: Adam
 
 trainer:
   reload: False # True
