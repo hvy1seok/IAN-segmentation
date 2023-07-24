@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ian_segmentation"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = [
     "MaiSon WonSeok Jang <npjws3690@gmail.com>", 
