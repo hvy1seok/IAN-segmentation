@@ -1,6 +1,6 @@
 import sys
 import os
-# os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'  # for multi-gpu
+os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'  # for multi-gpu
 import argparse
 import logging
 import logging.config
@@ -418,11 +418,12 @@ if __name__ == "__main__":
     # start wandb
     with open('wandb_key.txt', 'r') as f:
         api_key = f.read()
-    wandb.login(key=api_key)
+    # wandb.login(key=api_key)
     wandb.init(
         project="alveolar_canal_lee",
         entity="ian-segmentation",
-        config=unmunchify(config)
+        config=unmunchify(config),
+        mode='offline'
     )
 
     # Check if project_dir exists
