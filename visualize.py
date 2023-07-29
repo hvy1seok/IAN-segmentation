@@ -78,7 +78,12 @@ def save_predictions(config_path: os.PathLike, save_dir: os.PathLike, split: str
 
     model_name = config.model.name
     in_ch = 1
-    emb_shape = [dim // 8 for dim in config.data_loader.patch_shape]
+    if model_name == 'DeepLabV3-ResNet152':
+        emb_shape = [dim // 15 for dim in config.data_loader.patch_shape]
+    elif model_name == 'SegNet3D':
+        emb_shape = [7, 7, 7]
+    else:
+        emb_shape = [dim // 8 for dim in config.data_loader.patch_shape]
 
     model = ModelFactory(model_name, num_classes, in_ch, emb_shape).get().cuda()
     model = nn.DataParallel(model)
