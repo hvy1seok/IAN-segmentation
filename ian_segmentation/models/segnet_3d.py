@@ -8,7 +8,6 @@ class SegNet3D(nn.Module):
         super(SegNet3D, self).__init__()
         self.in_chn = input_channels
         self.out_chn = num_classes
-        emb_shape = (7,7,7)
         self.emb_shape = torch.as_tensor(emb_shape)
 
         # pos encoding

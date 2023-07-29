@@ -206,11 +206,11 @@ def make_layer(block, in_channels, channels, num_blocks, stride=1, dilation=1):
 
     return layer
 
-class BasicBlock(nn.Module):
+class BasicBlockV2(nn.Module):
     expansion = 1
 
     def __init__(self, in_channels, channels, stride=1, dilation=1):
-        super(BasicBlock, self).__init__()
+        super(BasicBlockV2, self).__init__()
 
         out_channels = self.expansion*channels
 
@@ -240,11 +240,11 @@ class BasicBlock(nn.Module):
 
         return out
 
-class Bottleneck(nn.Module):
+class BottleneckV2(nn.Module):
     expansion = 4
 
     def __init__(self, in_channels, channels, stride=1, dilation=1):
-        super(Bottleneck, self).__init__()
+        super(BottleneckV2, self).__init__()
 
         out_channels = self.expansion*channels
 
@@ -266,7 +266,9 @@ class Bottleneck(nn.Module):
 
     def forward(self, x):
         out = F.relu(self.bn1(self.conv1(x)))
-        out = F.relu(self.bn2(self.conv2(out)))
+        out = self.conv2(out)
+        # out = F.relu(self.bn2(self.conv2(out)))
+        out = F.relu(self.bn2(out))
         out = self.bn3(self.conv3(out))
 
         out = out + self.downsample(x)
@@ -291,7 +293,7 @@ class ResNet_Bottleneck_OS16(nn.Module):
         else:
             raise Exception("num_layers must be in {50, 101, 152}!")
 
-        self.layer5 = make_layer(Bottleneck, in_channels=4*256, channels=512, num_blocks=3, stride=1, dilation=2)
+        self.layer5 = make_layer(BottleneckV2, in_channels=4*256, channels=512, num_blocks=3, stride=1, dilation=2)
 
     def forward(self, x):
         c4 = self.resnet(x)
@@ -318,7 +320,7 @@ class ResNet_BasicBlock_OS16(nn.Module):
         else:
             raise Exception("num_layers must be in {18, 34}!")
     
-        self.layer5 = make_layer(BasicBlock, in_channels=256, channels=512, num_blocks=num_blocks, stride=1, dilation=2)
+        self.layer5 = make_layer(BasicBlockV2, in_channels=256, channels=512, num_blocks=num_blocks, stride=1, dilation=2)
 
     def forward(self, x):
         c4 = self.resnet(x)
@@ -349,9 +351,9 @@ class ResNet_BasicBlock_OS8(nn.Module):
         else:
             raise Exception("num_layers must be in {18, 34}!")
 
-        self.layer4 = make_layer(BasicBlock, in_channels=128, channels=256, num_blocks=num_blocks_layer_4, stride=1, dilation=2)
+        self.layer4 = make_layer(BasicBlockV2, in_channels=128, channels=256, num_blocks=num_blocks_layer_4, stride=1, dilation=2)
 
-        self.layer5 = make_layer(BasicBlock, in_channels=256, channels=512, num_blocks=num_blocks_layer_5, stride=1, dilation=4)
+        self.layer5 = make_layer(BasicBlockV2, in_channels=256, channels=512, num_blocks=num_blocks_layer_5, stride=1, dilation=4)
 
     def forward(self, x):
         c3 = self.resnet(x)

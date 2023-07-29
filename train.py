@@ -1,6 +1,4 @@
 import sys
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1,2,3,4'  # for multi-gpu
 import argparse
 import logging
 import logging.config
@@ -49,7 +47,12 @@ class Experiment:
         # load model
         model_name = self.config.model.name
         in_ch = 2 if self.config.experiment.name == 'Generation' else 1
-        emb_shape = [dim // 8 for dim in self.config.data_loader.patch_shape]
+        if model_name == 'DeepLabV3-ResNet152':
+            emb_shape = [dim // 15 for dim in self.config.data_loader.patch_shape]
+        elif model_name == 'SegNet3D':
+            emb_shape = [7, 7, 7]
+        else:
+            emb_shape = [dim // 8 for dim in self.config.data_loader.patch_shape]
 
         self.model = ModelFactory(model_name, num_classes, in_ch, emb_shape).get().cuda()
         self.model = nn.DataParallel(self.model)
@@ -394,9 +397,13 @@ if __name__ == "__main__":
     # Parse arguments
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("-c", "--config", default="config.yaml", help="the config file to be used to run the experiment", required=True)
+    arg_parser.add_argument("--gpus", default="0", type=str, help="the number of using gpu", required=True)
     arg_parser.add_argument("--verbose", action='store_true', help="Log also to stdout")
     arg_parser.add_argument("--debug", action='store_true', help="debug, no wandb")
     args = arg_parser.parse_args()
+    
+    import os
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpus
 
     # check if the config files exists
     if not os.path.exists(args.config):
@@ -418,13 +425,8 @@ if __name__ == "__main__":
     # start wandb
     with open('wandb_key.txt', 'r') as f:
         api_key = f.read()
-    # wandb.login(key=api_key)
-    wandb.init(
-        project="alveolar_canal_lee",
-        entity="ian-segmentation",
-        config=unmunchify(config),
-        mode='offline'
-    )
+    wandb.login(key=api_key, host='https://api.wandb.ai')
+    wandb.init(project="alveolar_canal_lee", entity="ian-segmentation", config=unmunchify(config), mode='offline')
 
     # Check if project_dir exists
     if not os.path.exists(config.project_dir):

@@ -61,23 +61,23 @@ class ASPP(nn.Module):
 class ASPP_Bottleneck(nn.Module):
     def __init__(self, num_classes):
         super(ASPP_Bottleneck, self).__init__()
-        in_ch = 513
+        in_ch = 512
 
-        self.conv_1x1_1 = nn.Conv3d(4*in_ch, 256, kernel_size=1)
+        self.conv_1x1_1 = nn.Conv3d(4*in_ch+1, 256, kernel_size=1)
         self.bn_conv_1x1_1 = nn.BatchNorm3d(256)
 
-        self.conv_3x3_1 = nn.Conv3d(4*in_ch, 256, kernel_size=3, stride=1, padding=6, dilation=6)
+        self.conv_3x3_1 = nn.Conv3d(4*in_ch+1, 256, kernel_size=3, stride=1, padding=6, dilation=6)
         self.bn_conv_3x3_1 = nn.BatchNorm3d(256)
 
-        self.conv_3x3_2 = nn.Conv3d(4*in_ch, 256, kernel_size=3, stride=1, padding=12, dilation=12)
+        self.conv_3x3_2 = nn.Conv3d(4*in_ch+1, 256, kernel_size=3, stride=1, padding=12, dilation=12)
         self.bn_conv_3x3_2 = nn.BatchNorm3d(256)
 
-        self.conv_3x3_3 = nn.Conv3d(4*in_ch, 256, kernel_size=3, stride=1, padding=18, dilation=18)
+        self.conv_3x3_3 = nn.Conv3d(4*in_ch+1, 256, kernel_size=3, stride=1, padding=18, dilation=18)
         self.bn_conv_3x3_3 = nn.BatchNorm3d(256)
 
         self.avg_pool = nn.AdaptiveAvgPool3d(1)
 
-        self.conv_1x1_2 = nn.Conv3d(4*in_ch, 256, kernel_size=1)
+        self.conv_1x1_2 = nn.Conv3d(4*in_ch+1, 256, kernel_size=1)
         self.bn_conv_1x1_2 = nn.BatchNorm3d(256)
 
         self.conv_1x1_3 = nn.Conv3d(1280, 256, kernel_size=1) # (1280 = 5*256)
